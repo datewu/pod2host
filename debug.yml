@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debug
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debug
+  template:
+    metadata:
+      labels:
+        app: debug
+    spec:
+      #hostNetwork: true
+      containers:
+      - name: alpine-debug
+        image: datewu/debughost:v0.0.1
+        resources: {}
+        volumeMounts:
+          - name: host-data
+            mountPath: /root/.ssh
+      volumes:
+        - name: host-data
+          hostPath:
+              path: /media/data/debug/ssh
